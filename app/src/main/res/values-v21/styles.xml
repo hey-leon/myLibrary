@@ -2,14 +2,23 @@
 <resources>
     <!-- The main them for the app-->
     <style name="MyLibraryTheme" parent="android:Theme.Material.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/MyLibraryTheme.ActionBar</item>
+        <!-- set system colors -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
+
     </style>
-    <!-- The action bar theme-->
-    <style name="MyLibraryTheme.ActionBar" parent="@android:style/Widget.Material.ActionBar">
-        <item name="android:background">@color/MyLibraryTheme.PrimaryColor_500</item>
-        <item name="android:icon">@android:color/transparent</item>
+
+    <!-- drawer text color -->
+    <style name="DrawerTextAppearance" parent="android:TextAppearance">
+        <item name="android:textColor">@color/DrawerTextColor</item>
     </style>
-    <!-- the primary and accent colors-->
-    <color name="MyLibraryTheme.PrimaryColor_500">#2196F3</color>
-    <color name="MyLibraryTheme.PrimaryColor_700">#1976D2</color>
+
+    <!-- app colors-->
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="accent">#E6EE9C</color>
+
+    <color name="DrawerTextColor">#000000</color>
+
 </resources>
