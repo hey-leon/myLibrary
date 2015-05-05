@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The main them for the app-->
+    <style name="MyLibraryTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyLibraryTheme.ActionBar</item>
+    </style>
+    <!-- The action bar theme-->
+    <style name="MyLibraryTheme.ActionBar" parent="@android:style/Widget.Material.ActionBar">
+        <item name="android:background">@color/MyLibraryTheme.PrimaryColor_500</item>
+        <item name="android:icon">@android:color/transparent</item>
+    </style>
+    <!-- the primary and accent colors-->
+    <color name="MyLibraryTheme.PrimaryColor_500">#2196F3</color>
+    <color name="MyLibraryTheme.PrimaryColor_700">#1976D2</color>
+</resources>
