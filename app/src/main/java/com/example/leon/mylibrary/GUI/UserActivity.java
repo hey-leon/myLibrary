@@ -221,7 +221,7 @@ public class UserActivity extends Activity
     public void changeActivityTitle(int number) {
         switch (number) {
             case 0:
-                mTitle = "MyLibrary";
+                mTitle = "My Library";
                 break;
             case 1:
                 mTitle = "Book Search";
