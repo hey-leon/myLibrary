@@ -66,35 +66,29 @@ public class UserActivity extends BaseActivity
         ridScanner = new RidScanner(nfcAdapter);
 
         //todo load prefs
-        String username;
-
-        //check for users
-        if(!userDb.hasUsers()){
-            Intent gotoNewUserActivity = new Intent (this, NewUserActivity.class);
-            startActivity(gotoNewUserActivity);
-            finish();
+        //if have user in prefs
+        if(false){
+            //load user
         }else{
-            //if user login prefs
-            //todo check prefs
-            //if user login intent
-            if((username = getIntent().getStringExtra("logging in"))
-                    != null){
-                mUser = userDb.findUser(username);
-            }else{
-                Intent gotoLoginActivity = new Intent (this, LoginActivity.class);
-                startActivity(gotoLoginActivity);
-                finish();
-            }
-            //if book search intent change to book search fragment
-            if(ridScanner.containsTag(getIntent())){
-                mNavigationDrawerFragment.changeDrawerItem(1);
+            //check if users exist
+            if(userDb.hasUsers()){
+                //check for login intent
+                handleLoginIntent();
+            }else {
+                //goto new user activity
+                gotoNewUserIntent();
             }
         }
 
-
+        //if book search intent change to book search fragment
+        if(ridScanner.containsTag(getIntent())){
+            mNavigationDrawerFragment.changeDrawerItem(1);
+        }
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -142,9 +136,7 @@ public class UserActivity extends BaseActivity
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
         setIntent(intent);
-
     }
 
     private void handleBookSearchIntent(Intent intent) {
@@ -175,6 +167,28 @@ public class UserActivity extends BaseActivity
             }
         }
 
+    }
+
+    private void handleLoginIntent() {
+        String username;
+        //check if user login intent exists
+        if ((username = getIntent().getStringExtra("logging in"))
+                != null) {
+            mUser = userDb.findUser(username);
+        } else {
+            Intent gotoLoginActivity = new Intent(this, LoginActivity.class);
+            startActivity(gotoLoginActivity);
+            finish();
+        }
+
+    }
+
+
+    //intent creators
+    private void gotoNewUserIntent() {
+        Intent gotoNewUserActivity = new Intent (this, NewUserActivity.class);
+        startActivity(gotoNewUserActivity);
+        finish();
     }
 
 
