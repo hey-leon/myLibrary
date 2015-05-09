@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -65,10 +66,13 @@ public class UserActivity extends BaseActivity
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         ridScanner = new RidScanner(nfcAdapter);
 
-        //todo load prefs
+        //load prefs
+        SharedPreferences prefs = getSharedPreferences("current user", MODE_PRIVATE);
+        String username = prefs.getString("username", null);
+
         //if have user in prefs
-        if(false){
-            //load user
+        if (username != null) {
+            mUser = loadUser(username);
         }else{
             //check if users exist
             if(userDb.hasUsers()){
@@ -83,11 +87,12 @@ public class UserActivity extends BaseActivity
         //if book search intent change to book search fragment
         if(ridScanner.containsTag(getIntent())){
             mNavigationDrawerFragment.changeDrawerItem(1);
+        }else{
+            mNavigationDrawerFragment.changeDrawerItem(0);
         }
 
 
     }
-
 
 
     @Override
@@ -109,13 +114,10 @@ public class UserActivity extends BaseActivity
 
         enableForegroundDispatchSystem();
 
-        //check intent
-        Intent intent = getIntent();
-
         //book search intent
         if(mActivityFragment.getClass() == BookSearchActivityFragment.class){
             if(ridScanner.containsTag(getIntent())){
-                handleBookSearchIntent(intent);
+                handleBookSearchIntent(getIntent());
             }
         }
 
@@ -125,7 +127,10 @@ public class UserActivity extends BaseActivity
     protected void onPause() {
         super.onPause();
 
-        //todo save prefs
+        //save prefs
+        SharedPreferences.Editor editor = getSharedPreferences("current user", MODE_PRIVATE).edit();
+        editor.putString("username", mUser.getUsername());
+        editor.commit();
 
         disableForegroundDispatchSystem();
 
@@ -337,6 +342,10 @@ public class UserActivity extends BaseActivity
 
         return new Book(cover, name, by, pub);
 
+    }
+
+    private User loadUser(String username) {
+        return userDb.findUser(username);
     }
 
 
