@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.leon.mylibrary.GUI.LoginActivity">
+    tools:context="com.example.leon.mylibrary.GUI.NewUserActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,8 +37,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log In"
+        android:text="Create User"
         android:layout_below="@+id/passwordEditText"
-        android:id="@+id/loginButton"/>
+        android:id="@+id/createUserButton"/>
 
 </RelativeLayout>

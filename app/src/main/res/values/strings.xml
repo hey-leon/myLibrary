@@ -14,6 +14,10 @@
 
     <!-- book view strings-->
     <string name="cover_description">book cover</string>
+    <string name="title_activity_new_user">NewUserActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 
 </resources>

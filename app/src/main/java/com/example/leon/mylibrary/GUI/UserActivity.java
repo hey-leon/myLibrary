@@ -1,7 +1,6 @@
 package com.example.leon.mylibrary.GUI;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.PendingIntent;
@@ -23,7 +22,9 @@ import com.example.leon.mylibrary.GUI.UserActivityFragments.FriendSuggestionActi
 import com.example.leon.mylibrary.GUI.UserActivityFragments.UserMainActivityFragment;
 import com.example.leon.mylibrary.OOP.Book;
 import com.example.leon.mylibrary.OOP.RidScanner;
+import com.example.leon.mylibrary.OOP.User;
 import com.example.leon.mylibrary.R;
+import com.example.leon.mylibrary.SQL.BaseActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
-public class UserActivity extends Activity
+public class UserActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     //fragments
@@ -41,6 +42,7 @@ public class UserActivity extends Activity
 
     //variables
     private CharSequence mTitle;
+    private User mUser;
     private Book mBook;
 
 
@@ -63,11 +65,32 @@ public class UserActivity extends Activity
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         ridScanner = new RidScanner(nfcAdapter);
 
+        //todo load prefs
+        String username;
 
-        //if book scanned intent change to book search fragment
-        if(ridScanner.containsTag(getIntent())){
-            mNavigationDrawerFragment.changeDrawerItem(1);
+        //check for users
+        if(!userDb.hasUsers()){
+            Intent gotoNewUserActivity = new Intent (this, NewUserActivity.class);
+            startActivity(gotoNewUserActivity);
+            finish();
+        }else{
+            //if user login prefs
+            //todo check prefs
+            //if user login intent
+            if((username = getIntent().getStringExtra("logging in"))
+                    != null){
+                mUser = userDb.findUser(username);
+            }else{
+                Intent gotoLoginActivity = new Intent (this, LoginActivity.class);
+                startActivity(gotoLoginActivity);
+                finish();
+            }
+            //if book search intent change to book search fragment
+            if(ridScanner.containsTag(getIntent())){
+                mNavigationDrawerFragment.changeDrawerItem(1);
+            }
         }
+
 
 
 
@@ -94,6 +117,7 @@ public class UserActivity extends Activity
 
         //check intent
         Intent intent = getIntent();
+
         //book search intent
         if(mActivityFragment.getClass() == BookSearchActivityFragment.class){
             if(ridScanner.containsTag(getIntent())){
@@ -106,6 +130,8 @@ public class UserActivity extends Activity
     @Override
     protected void onPause() {
         super.onPause();
+
+        //todo save prefs
 
         disableForegroundDispatchSystem();
 
