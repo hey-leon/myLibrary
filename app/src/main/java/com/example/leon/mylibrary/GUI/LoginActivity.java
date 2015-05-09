@@ -20,6 +20,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     EditText passwordEditText;
     Button loginButton;
 
+    //state callbacks
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         return true;
     }
 
+
+    //listener handlers
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -66,21 +69,32 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
-    private void Login() {
-        String username = usernameEditText.getText().toString();
 
+    //intent creators
+    private void loginToUser(String username) {
+        Intent loginToUser = new Intent(this, UserActivity.class);
+        loginToUser.putExtra("logging in", username);
+        startActivity(loginToUser);
+    }
+
+
+    //login helper
+    private void Login() {
+
+        //grab username
+        String username = usernameEditText.getText().toString();
+        //find user
         User user = userDb.findUser(username);
-        //check for user
+        //if user exists
         if(user != null){
           //check password
             if(user.getPassword().equals(passwordEditText.getText().toString())){
-                Intent loginToUser = new Intent(this, UserActivity.class);
-                loginToUser.putExtra("logging in", username);
-                startActivity(loginToUser);
+                loginToUser(username);
             }else{
                 Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
                 passwordEditText.setText("");
             }
+        //if user null
         }else{
             Toast.makeText(this, "Incorrect Username", Toast.LENGTH_SHORT).show();
             usernameEditText.setText("");
@@ -89,4 +103,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
 
     }
+
+
 }
