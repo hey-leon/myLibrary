@@ -67,11 +67,10 @@ public class UserActivity extends BaseActivity
         ridScanner = new RidScanner(nfcAdapter);
 
         //load prefs
-        SharedPreferences prefs = getSharedPreferences("current user", MODE_PRIVATE);
-        String username = prefs.getString("username", null);
+        String username = loadUsernamePreferences();
 
         //if have user in prefs
-        if (username != null) {
+        if (username != null && !username.equals("")) {
             mUser = loadUser(username);
         }else{
             //check if users exist
@@ -101,7 +100,7 @@ public class UserActivity extends BaseActivity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.user, menu);
+            getMenuInflater().inflate(R.menu.menu_user, menu);
             restoreActionBar();
             return true;
         }
@@ -130,7 +129,7 @@ public class UserActivity extends BaseActivity
         //save prefs
         SharedPreferences.Editor editor = getSharedPreferences("current user", MODE_PRIVATE).edit();
         editor.putString("username", mUser.getUsername());
-        editor.commit();
+        editor.apply();
 
         disableForegroundDispatchSystem();
 
@@ -181,15 +180,17 @@ public class UserActivity extends BaseActivity
                 != null) {
             mUser = userDb.findUser(username);
         } else {
-            Intent gotoLoginActivity = new Intent(this, LoginActivity.class);
-            startActivity(gotoLoginActivity);
-            finish();
+            gotoLoginIntent();
         }
 
     }
 
+    private void gotoLoginIntent() {
+        Intent gotoLoginActivity = new Intent(this, LoginActivity.class);
+        startActivity(gotoLoginActivity);
+        finish();
+    }
 
-    //intent creators
     private void gotoNewUserIntent() {
         Intent gotoNewUserActivity = new Intent (this, NewUserActivity.class);
         startActivity(gotoNewUserActivity);
@@ -203,11 +204,14 @@ public class UserActivity extends BaseActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                break;
+            case R.id.action_signout:
+                //sets username blank for save username preferaence
+                mUser.setUsername("");
+                gotoLoginIntent();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -231,6 +235,12 @@ public class UserActivity extends BaseActivity
         }
     }
 
+
+    //preference helper
+    private String loadUsernamePreferences() {
+        SharedPreferences prefs = getSharedPreferences("current user", MODE_PRIVATE);
+        return prefs.getString("username", null);
+    }
 
     //ui helpers
     private void setupDrawer() {
