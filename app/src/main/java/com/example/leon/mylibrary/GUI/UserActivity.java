@@ -31,6 +31,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 
 public class UserActivity extends BaseActivity
@@ -335,6 +336,29 @@ public class UserActivity extends BaseActivity
     }
 
 
+    //db helpers
+    private User loadUser(String username) {
+        return userDb.findUser(username);
+    }
+
+    private ArrayList<String> loadReviews(String dbName) {
+        ArrayList<String> reviews;
+        if(bookReviewDb.hasBookTable(dbName)){
+            reviews = bookReviewDb.findAllReviews(dbName);
+        }else{
+            bookReviewDb.addBookTable(dbName);
+            reviews = bookReviewDb.findAllReviews(dbName);
+        }
+        return reviews;
+    }
+
+    public void addBookReview(String review){
+
+        bookReviewDb.addBookReview(mBook.getDbName(),mUser.getUsername(),review);
+
+    }
+
+
     //general helpers
     private Book fetchBook(String rid) {
 
@@ -350,13 +374,17 @@ public class UserActivity extends BaseActivity
         //fetch pub
         String pub = fetchAssetString(rid + "/pub.txt");
 
-        return new Book(cover, name, by, pub);
+        //fetch book db name
+        String dbName = fetchDbName(name);
+
+        //fetch reviews
+        ArrayList<String> reviews = loadReviews(dbName);
+
+        return new Book(cover, name, by, pub, dbName, reviews);
 
     }
 
-    private User loadUser(String username) {
-        return userDb.findUser(username);
+    private String fetchDbName(String bookname) {
+        return bookname.replaceAll(" ", "").replaceAll(":", "");
     }
-
-
 }
