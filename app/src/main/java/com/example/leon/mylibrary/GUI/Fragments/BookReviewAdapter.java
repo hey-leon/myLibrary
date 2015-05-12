@@ -55,7 +55,7 @@ public class BookReviewAdapter extends BaseAdapter {
         TextView timeTextView = (TextView)view.findViewById(R.id.bookReviewTimeTextView);
         TextView reviewTextView = (TextView)view.findViewById(R.id.bookReviewReviewTextView);
 
-        Review review = reviews.get(position);
+        Review review = reviews.get( (getCount() - 1) - position);
 
         usernameTextView.setText(review.getUsername());
         timeTextView.setText(review.getTime());

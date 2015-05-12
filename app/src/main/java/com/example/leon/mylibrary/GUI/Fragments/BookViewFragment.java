@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,9 @@ import com.example.leon.mylibrary.GUI.UserActivity;
 import com.example.leon.mylibrary.OOP.Book;
 import com.example.leon.mylibrary.OOP.Review;
 import com.example.leon.mylibrary.R;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * Created by Leon on 3/05/2015.
@@ -70,7 +72,7 @@ public class BookViewFragment extends Fragment implements View.OnClickListener {
         nameTextView.setText(book.getName());
         byTextView.setText(book.getBy());
         pubTextView.setText(book.getPub());
-        //reviews listview
+        //reviews list view
         reviewAdapter.addAll(book.getReviews());
         reviewAdapter.notifyDataSetChanged();
     }
@@ -93,9 +95,7 @@ public class BookViewFragment extends Fragment implements View.OnClickListener {
         // Button Responses
         alert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Time theTime = new Time();
-                theTime.setToNow();
-                String time = theTime.format2445();
+                String time = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date());
                 Review review = new Review(activity.getUsername(), time
                         , reviewInput.getText().toString());
                 submitReview(review);

@@ -18,6 +18,7 @@ public class NewUserActivity extends BaseActivity implements View.OnClickListene
     //views
     EditText usernameEditText;
     EditText passwordEditText;
+    EditText password2EditText;
     Button createUserButton;
 
 
@@ -30,6 +31,7 @@ public class NewUserActivity extends BaseActivity implements View.OnClickListene
         //wiring
         usernameEditText = (EditText)findViewById(R.id.usernameEditText);
         passwordEditText = (EditText)findViewById(R.id.passwordEditText);
+        password2EditText = (EditText)findViewById(R.id.password2EditText);
         createUserButton = (Button)findViewById(R.id.createUserButton);
 
         //set listener
@@ -70,8 +72,9 @@ public class NewUserActivity extends BaseActivity implements View.OnClickListene
                 //grab user details
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
+                String password2 = password2EditText.getText().toString();
                 //authenticate the user details
-                if(authenticateUser(username, password)){
+                if(authenticateUser(username, password, password2)){
                     //create user and login
                     createUser(username, password);
                 }
@@ -91,7 +94,7 @@ public class NewUserActivity extends BaseActivity implements View.OnClickListene
 
 
     //create user helpers
-    private boolean authenticateUser(String username, String password) {
+    private boolean authenticateUser(String username, String password, String password2) {
         boolean hasCap = false;
         boolean hasNum = false;
 
@@ -104,9 +107,19 @@ public class NewUserActivity extends BaseActivity implements View.OnClickListene
         if(password.length() < 8){
             Toast.makeText(this, "Password must be at least eight characters", Toast.LENGTH_LONG).show();
             passwordEditText.setText("");
+            password2EditText.setText("");
             return false;
         }
-        //  ###TEST 3#### --- password must include 1 capital and numeric
+
+        // ###TEST 3#### --- passwords must mach
+        if(!password.equals(password2)){
+            Toast.makeText(this, "Passwords do no match", Toast.LENGTH_LONG).show();
+            passwordEditText.setText("");
+            password2EditText.setText("");
+            return false;
+        }
+
+        //  ###TEST 4#### --- password must include 1 capital and numeric
         for(int i = 0; i < password.length(); i++){
             //check for cap
             if(Character.isUpperCase(password.charAt(i))){
@@ -122,8 +135,9 @@ public class NewUserActivity extends BaseActivity implements View.OnClickListene
             return true;
         }else{
             //if TEST 3 failed...
-            Toast.makeText(this, "Password must include atleist one uppercase and one numeric", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Password must include at least one uppercase and one numeric", Toast.LENGTH_LONG).show();
             passwordEditText.setText("");
+            password2EditText.setText("");
             return false;
         }
 
@@ -149,5 +163,6 @@ public class NewUserActivity extends BaseActivity implements View.OnClickListene
     private void trimUserDetails() {
         usernameEditText.setText(usernameEditText.getText().toString().trim());
         passwordEditText.setText(passwordEditText.getText().toString().trim());
+        password2EditText.setText(password2EditText.getText().toString().trim());
     }
 }
