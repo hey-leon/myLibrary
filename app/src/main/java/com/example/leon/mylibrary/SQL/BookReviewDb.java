@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.leon.mylibrary.OOP.Review;
+
 import java.util.ArrayList;
 
 /**
@@ -21,7 +23,8 @@ public class BookReviewDb extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "bookReviewDB.db";
 
     public static final String COLUMN_USERNAME = "username";
-    public static final String COLUMN_REVIEW = "userreview";
+    public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_REVIEW = "review";
 
     public BookReviewDb(Context context,
                         CursorFactory factory) {
@@ -48,6 +51,7 @@ public class BookReviewDb extends SQLiteOpenHelper {
         String CREATE_BOOK_TABLE = "CREATE TABLE " +
                 TABLE_BOOK + "("
                 + COLUMN_USERNAME + " TEXT,"
+                + COLUMN_TIME + " TEXT,"
                 + COLUMN_REVIEW + " TEXT"
                 + ")";
         bookReviewDb.execSQL(CREATE_BOOK_TABLE);
@@ -70,11 +74,12 @@ public class BookReviewDb extends SQLiteOpenHelper {
 
 
     //book review handlers
-    public void addBookReview(String TABLE_BOOK, String username, String review) {
+    public void addBookReview(String TABLE_BOOK, Review review) {
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USERNAME, username);
-        values.put(COLUMN_REVIEW, review);
+        values.put(COLUMN_USERNAME, review.getUsername());
+        values.put(COLUMN_TIME, review.getTime());
+        values.put(COLUMN_REVIEW, review.getReview());
 
         bookReviewDb = this.getWritableDatabase();
 
@@ -94,7 +99,7 @@ public class BookReviewDb extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            review = cursor.getString(1);
+            review = cursor.getString(2);
             cursor.close();
         }
 
@@ -103,7 +108,7 @@ public class BookReviewDb extends SQLiteOpenHelper {
         return review;
     }
 
-    public ArrayList<String> findAllReviews(String TABLE_BOOK) {
+    public ArrayList<Review> findAllReviews(String TABLE_BOOK) {
         String query = "Select * FROM " + TABLE_BOOK;
 
         bookReviewDb = this.getWritableDatabase();
@@ -114,8 +119,10 @@ public class BookReviewDb extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             while (!cursor.isAfterLast()) {
-                String review = cursor.getString(1);
-                reviews.add(review);
+                String username = cursor.getString(0);
+                String time = cursor.getString(1);
+                String review = cursor.getString(2);
+                reviews.add(new Review(username, time, review));
                 cursor.moveToNext();
             }
         }

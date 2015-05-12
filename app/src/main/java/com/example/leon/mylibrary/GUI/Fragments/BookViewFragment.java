@@ -6,28 +6,26 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.leon.mylibrary.GUI.UserActivity;
 import com.example.leon.mylibrary.OOP.Book;
+import com.example.leon.mylibrary.OOP.Review;
 import com.example.leon.mylibrary.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by Leon on 3/05/2015.
  */
 public class BookViewFragment extends Fragment implements View.OnClickListener {
 
-    ArrayList<String> reviews;
     UserActivity activity;
     //views
     private View view;
@@ -35,9 +33,9 @@ public class BookViewFragment extends Fragment implements View.OnClickListener {
     private TextView nameTextView;
     private TextView byTextView;
     private TextView pubTextView;
-    private Button addReviewButton;
+    private ImageButton addReviewButton;
     private ListView reviewsListView;
-    private ArrayAdapter<String> reviewAdapter;
+    private BookReviewAdapter reviewAdapter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -55,12 +53,11 @@ public class BookViewFragment extends Fragment implements View.OnClickListener {
         byTextView = (TextView) view.findViewById(R.id.by);
         pubTextView = (TextView) view.findViewById(R.id.pub);
 
-        reviews = new ArrayList<String>();
         reviewsListView = (ListView) view.findViewById(R.id.reviewListView);
-        reviewAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, reviews);
+        reviewAdapter = new BookReviewAdapter(view.getContext());
         reviewsListView.setAdapter(reviewAdapter);
 
-        addReviewButton = (Button) view.findViewById(R.id.addReviewButton);
+        addReviewButton = (ImageButton) view.findViewById(R.id.addReviewButton);
         addReviewButton.setOnClickListener(this);
 
         return view;
@@ -81,11 +78,11 @@ public class BookViewFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == addReviewButton.getId()) {
-            createReview();
+            getReview();
         }
     }
 
-    private void createReview() {
+    private void getReview() {
 
         //the dialog
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
@@ -96,7 +93,12 @@ public class BookViewFragment extends Fragment implements View.OnClickListener {
         // Button Responses
         alert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                submitReview(reviewInput.getText().toString());
+                Time theTime = new Time();
+                theTime.setToNow();
+                String time = theTime.format2445();
+                Review review = new Review(activity.getUsername(), time
+                        , reviewInput.getText().toString());
+                submitReview(review);
             }
         });
 
@@ -108,7 +110,8 @@ public class BookViewFragment extends Fragment implements View.OnClickListener {
         alert.show();
     }
 
-    private void submitReview(String review) {
+
+    private void submitReview(Review review) {
         activity.addBookReview(review);
         reviewAdapter.add(review);
         reviewAdapter.notifyDataSetChanged();

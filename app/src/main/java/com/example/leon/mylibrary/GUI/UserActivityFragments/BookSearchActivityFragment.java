@@ -11,7 +11,10 @@ import android.widget.FrameLayout;
 
 import com.example.leon.mylibrary.GUI.Fragments.BookViewFragment;
 import com.example.leon.mylibrary.OOP.Book;
+import com.example.leon.mylibrary.OOP.Review;
 import com.example.leon.mylibrary.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Leon on 5/05/2015.

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/bookReviewByTextView"
+        android:layout_alignParentTop="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:id="@+id/bookReviewUsernameTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:id="@+id/bookReviewTimeTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bookReviewUsernameTextView"
+        android:layout_marginTop="10dp"
+        android:id="@+id/bookReviewReviewTextView"/>
+
+</RelativeLayout>

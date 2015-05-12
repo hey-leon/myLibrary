@@ -7,27 +7,35 @@
     android:layout_width="match_parent"
     android:layout_height="520dip"
     card_view:cardCornerRadius="4dp"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:divider="?android:dividerHorizontal"
+    android:showDividers="middle">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="500dip"
-        android:divider="?android:dividerHorizontal"
-        android:showDividers="middle"
         android:id="@+id/reviewLayout">
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="16dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:src=""/>
+            android:layout_marginBottom="10dip"
+            android:layout_marginEnd="10dip"
+            android:clickable="true"
+            android:src="@mipmap/create_review"
+            android:background="?android:attr/selectableItemBackground"
+            android:id="@+id/addReviewButton"
+            android:contentDescription="create a review" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dip">
+            android:layout_marginTop="0dip"
+            android:id="@+id/descriptionLayout">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -38,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/cover"
+                android:layout_toEndOf="@id/cover"
                 android:layout_marginTop="4dip"
                 android:layout_marginLeft="8dip"
                 android:textStyle="bold"
@@ -48,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/cover"
-                android:layout_below="@+id/name"
+                android:layout_below="@id/name"
                 android:layout_marginLeft="8dip"
                 android:textSize="12sp"
                 android:id="@+id/by"/>
@@ -57,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/cover"
-                android:layout_below="@+id/by"
+                android:layout_below="@id/by"
                 android:layout_marginLeft="8dip"
                 android:textSize="12sp"
                 android:id="@+id/pub"/>
@@ -67,6 +75,7 @@
             <ListView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:layout_below="@id/descriptionLayout"
                 android:id="@+id/reviewListView"></ListView>
 
     </RelativeLayout>

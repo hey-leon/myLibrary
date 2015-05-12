@@ -14,9 +14,9 @@ public class Book {
     private String by;
     private String pub;
     private String dbName;
-    private ArrayList<String> reviews;
+    private ArrayList<Review> reviews;
 
-    public Book(Drawable cover, String name, String by, String pub, String dbName, ArrayList<String> reviews) {
+    public Book(Drawable cover, String name, String by, String pub, String dbName, ArrayList<Review> reviews) {
         this.cover = cover;
         this.name = name;
         this.by = by;
@@ -41,7 +41,7 @@ public class Book {
         return pub;
     }
 
-    public ArrayList<String> getReviews() {
+    public ArrayList<Review> getReviews() {
         return reviews;
     }
 

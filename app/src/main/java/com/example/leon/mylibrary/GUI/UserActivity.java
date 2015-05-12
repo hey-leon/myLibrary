@@ -22,6 +22,7 @@ import com.example.leon.mylibrary.GUI.UserActivityFragments.BookSearchActivityFr
 import com.example.leon.mylibrary.GUI.UserActivityFragments.FriendSuggestionActivityFragment;
 import com.example.leon.mylibrary.GUI.UserActivityFragments.UserMainActivityFragment;
 import com.example.leon.mylibrary.OOP.Book;
+import com.example.leon.mylibrary.OOP.Review;
 import com.example.leon.mylibrary.OOP.RidScanner;
 import com.example.leon.mylibrary.OOP.User;
 import com.example.leon.mylibrary.R;
@@ -341,8 +342,9 @@ public class UserActivity extends BaseActivity
         return userDb.findUser(username);
     }
 
-    private ArrayList<String> loadReviews(String dbName) {
-        ArrayList<String> reviews;
+    private ArrayList<Review> loadReviews(String dbName) {
+
+        ArrayList<Review> reviews;
         if(bookReviewDb.hasBookTable(dbName)){
             reviews = bookReviewDb.findAllReviews(dbName);
         }else{
@@ -352,9 +354,9 @@ public class UserActivity extends BaseActivity
         return reviews;
     }
 
-    public void addBookReview(String review){
+    public void addBookReview(Review review){
 
-        bookReviewDb.addBookReview(mBook.getDbName(),mUser.getUsername(),review);
+        bookReviewDb.addBookReview(mBook.getDbName(),review);
 
     }
 
@@ -378,7 +380,7 @@ public class UserActivity extends BaseActivity
         String dbName = fetchDbName(name);
 
         //fetch reviews
-        ArrayList<String> reviews = loadReviews(dbName);
+        ArrayList<Review> reviews = loadReviews(dbName);
 
         return new Book(cover, name, by, pub, dbName, reviews);
 
@@ -386,5 +388,9 @@ public class UserActivity extends BaseActivity
 
     private String fetchDbName(String bookname) {
         return bookname.replaceAll(" ", "").replaceAll(":", "");
+    }
+
+    public String getUsername(){
+        return mUser.getUsername();
     }
 }
