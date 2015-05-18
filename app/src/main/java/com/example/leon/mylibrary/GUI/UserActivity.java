@@ -303,7 +303,7 @@ public class UserActivity extends BaseActivity
     }
 
 
-    //io helpers
+    //asset helpers
     public String fetchAssetString(String location) {
         try {
             //get input stream
@@ -365,7 +365,7 @@ public class UserActivity extends BaseActivity
     private Book fetchBook(String rid) {
 
         //fetch cover
-        Drawable cover = fetchAssetDrawable(rid + "/cover.jpg");
+        Drawable cover = fetchAssetDrawable(rid + "/cover.png");
 
         //fetch name
         String name = fetchAssetString(rid + "/name.txt");

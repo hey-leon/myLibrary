@@ -1,73 +1,83 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.leon.mylibrary.GUI.NewUserActivity">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:id="@+id/imageView2"
-        android:src="@drawable/mylibrary_graphic"
-        android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="com.example.leon.mylibrary.GUI.NewUserActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageView2"
-        android:layout_marginTop="25dp"
-        android:text="Username:"
-        android:id="@+id/usernameTextView"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:id="@+id/imageView2"
+            android:src="@drawable/mylibrary_graphic"
+            android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/usernameTextView"
-        android:singleLine="true"
-        android:id="@+id/usernameEditText"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView2"
+            android:layout_marginTop="25dp"
+            android:text="Username:"
+            android:id="@+id/usernameTextView"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password:"
-        android:layout_below="@+id/usernameEditText"
-        android:id="@+id/passwordTextView"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/usernameTextView"
+            android:singleLine="true"
+            android:id="@+id/usernameEditText"/>
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:inputType="textPassword"
-        android:id="@+id/passwordEditText"
-        android:layout_below="@+id/passwordTextView"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password:"
+            android:layout_below="@+id/usernameEditText"
+            android:id="@+id/passwordTextView"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirm Password:"
-        android:layout_below="@+id/passwordEditText"
-        android:id="@+id/password2TextView"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:inputType="textPassword"
+            android:id="@+id/passwordEditText"
+            android:layout_below="@+id/passwordTextView"
+            android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:inputType="textPassword"
-        android:id="@+id/password2EditText"
-        android:layout_below="@+id/password2TextView"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm Password:"
+            android:layout_below="@+id/passwordEditText"
+            android:id="@+id/password2TextView"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:id="@+id/createUserButton"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/password2EditText"
-        android:layout_centerHorizontal="true" />
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:inputType="textPassword"
+            android:id="@+id/password2EditText"
+            android:layout_below="@+id/password2TextView"
+            android:layout_alignParentStart="true" />
 
-</RelativeLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:id="@+id/createUserButton"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/password2EditText"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</ScrollView>

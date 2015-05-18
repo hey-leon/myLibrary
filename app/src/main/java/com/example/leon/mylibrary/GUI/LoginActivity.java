@@ -20,6 +20,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     EditText usernameEditText;
     EditText passwordEditText;
     Button loginButton;
+    Button loginSignUpButton;
 
 
     //state callbacks
@@ -32,10 +33,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         usernameEditText = (EditText)findViewById(R.id.usernameEditText);
         passwordEditText = (EditText)findViewById(R.id.passwordEditText);
         loginButton = (Button)findViewById(R.id.loginButton);
+        loginSignUpButton = (Button)findViewById(R.id.loginSignUpButton);
 
         //set listener
         loginButton.setOnClickListener(this);
-
+        loginSignUpButton.setOnClickListener(this);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.loginButton:
                 Login();
                 break;
-            case R.id.loginCreateUserButton:
+            case R.id.loginSignUpButton:
                 CreateUser();
         }
     }
