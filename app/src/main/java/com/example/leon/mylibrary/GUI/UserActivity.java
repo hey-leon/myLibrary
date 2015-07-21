@@ -387,7 +387,7 @@ public class UserActivity extends BaseActivity
     }
 
     private String fetchDbName(String bookname) {
-        return bookname.replaceAll(" ", "").replaceAll(":", "");
+        return bookname.replaceAll("[:-@]", "").replaceAll("[!-/]","").replaceAll(" ", "");
     }
 
     public String getUsername(){

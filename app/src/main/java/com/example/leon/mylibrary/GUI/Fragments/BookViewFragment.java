@@ -3,6 +3,7 @@ package com.example.leon.mylibrary.GUI.Fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -102,15 +103,18 @@ public class BookViewFragment extends Fragment implements View.OnClickListener {
         alert.setView(reviewInput);
 
         // Button Responses
-        alert.setPositiveButton("Submit", (dialog, whichButton) -> {
-            String time = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date());
-            Review review = new Review(activity.getUsername(), time
-                    , reviewInput.getText().toString());
-            submitReview(review);
+        alert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                String time = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date());
+                Review review = new Review(activity.getUsername(), time
+                        , reviewInput.getText().toString());
+                submitReview(review);
+            }
         });
 
-        alert.setNegativeButton("Cancel", (dialog, whichButton) -> {
-            // Canceled.
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
         });
         alert.show();
     }
