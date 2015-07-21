@@ -8,10 +8,12 @@ import android.os.Bundle;
  */
 public class BaseActivity extends Activity {
     protected static UserDb userDb;
+    protected static BookReviewDb bookReviewDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userDb = new UserDb(this, null);
+        bookReviewDb = new BookReviewDb(this, null);
     }
 }

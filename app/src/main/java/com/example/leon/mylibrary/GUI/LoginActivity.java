@@ -15,10 +15,13 @@ import com.example.leon.mylibrary.SQL.BaseActivity;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
+
     //views
     EditText usernameEditText;
     EditText passwordEditText;
     Button loginButton;
+    Button loginSignUpButton;
+
 
     //state callbacks
     @Override
@@ -30,10 +33,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         usernameEditText = (EditText)findViewById(R.id.usernameEditText);
         passwordEditText = (EditText)findViewById(R.id.passwordEditText);
         loginButton = (Button)findViewById(R.id.loginButton);
+        loginSignUpButton = (Button)findViewById(R.id.loginSignUpButton);
 
         //set listener
         loginButton.setOnClickListener(this);
-
+        loginSignUpButton.setOnClickListener(this);
     }
 
     @Override
@@ -66,6 +70,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.loginButton:
                 Login();
                 break;
+            case R.id.loginSignUpButton:
+                CreateUser();
         }
     }
 
@@ -75,6 +81,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         Intent loginToUser = new Intent(this, UserActivity.class);
         loginToUser.putExtra("logging in", username);
         startActivity(loginToUser);
+    }
+
+    private void CreateUser() {
+        Intent createUser = new Intent(this, NewUserActivity.class);
+        startActivity(createUser);
     }
 
 

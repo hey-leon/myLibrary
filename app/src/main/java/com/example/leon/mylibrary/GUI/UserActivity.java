@@ -22,6 +22,7 @@ import com.example.leon.mylibrary.GUI.UserActivityFragments.BookSearchActivityFr
 import com.example.leon.mylibrary.GUI.UserActivityFragments.FriendSuggestionActivityFragment;
 import com.example.leon.mylibrary.GUI.UserActivityFragments.UserMainActivityFragment;
 import com.example.leon.mylibrary.OOP.Book;
+import com.example.leon.mylibrary.OOP.Review;
 import com.example.leon.mylibrary.OOP.RidScanner;
 import com.example.leon.mylibrary.OOP.User;
 import com.example.leon.mylibrary.R;
@@ -31,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 
 public class UserActivity extends BaseActivity
@@ -301,7 +303,7 @@ public class UserActivity extends BaseActivity
     }
 
 
-    //io helpers
+    //asset helpers
     public String fetchAssetString(String location) {
         try {
             //get input stream
@@ -335,11 +337,35 @@ public class UserActivity extends BaseActivity
     }
 
 
+    //db helpers
+    private User loadUser(String username) {
+        return userDb.findUser(username);
+    }
+
+    private ArrayList<Review> loadReviews(String dbName) {
+
+        ArrayList<Review> reviews;
+        if(bookReviewDb.hasBookTable(dbName)){
+            reviews = bookReviewDb.findAllReviews(dbName);
+        }else{
+            bookReviewDb.addBookTable(dbName);
+            reviews = bookReviewDb.findAllReviews(dbName);
+        }
+        return reviews;
+    }
+
+    public void addBookReview(Review review){
+
+        bookReviewDb.addBookReview(mBook.getDbName(),review);
+
+    }
+
+
     //general helpers
     private Book fetchBook(String rid) {
 
         //fetch cover
-        Drawable cover = fetchAssetDrawable(rid + "/cover.jpg");
+        Drawable cover = fetchAssetDrawable(rid + "/cover.png");
 
         //fetch name
         String name = fetchAssetString(rid + "/name.txt");
@@ -350,13 +376,21 @@ public class UserActivity extends BaseActivity
         //fetch pub
         String pub = fetchAssetString(rid + "/pub.txt");
 
-        return new Book(cover, name, by, pub);
+        //fetch book db name
+        String dbName = fetchDbName(name);
+
+        //fetch reviews
+        ArrayList<Review> reviews = loadReviews(dbName);
+
+        return new Book(cover, name, by, pub, dbName, reviews);
 
     }
 
-    private User loadUser(String username) {
-        return userDb.findUser(username);
+    private String fetchDbName(String bookname) {
+        return bookname.replaceAll("[:-@]", "").replaceAll("[!-/]","").replaceAll(" ", "");
     }
 
-
+    public String getUsername(){
+        return mUser.getUsername();
+    }
 }
